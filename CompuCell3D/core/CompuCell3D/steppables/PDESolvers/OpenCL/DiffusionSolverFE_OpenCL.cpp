@@ -734,8 +734,10 @@ void DiffusionSolverFE_OpenCL::initImpl() {
     // on some low-end GPUs we need to limit  number of workers because if the kernel code is too large those cards will go out of  resources
     // here we put heuristic 0.8 factor limiting number of threads - this will give slightly worse performence but will avoid crashes
 
-    localWorkSize[2] = std::min(oclHelper->getMaxWorkGroupSize() / (BLOCK_SIZE * BLOCK_SIZE), size_t(fieldDim.z));
+//    localWorkSize[2] = std::min(oclHelper->getMaxWorkGroupSize() / (BLOCK_SIZE * BLOCK_SIZE), size_t(fieldDim.z));
 
+	localWorkSize[2] = 3;
+	cerr << "***Cavid*** my change: localWorkSize[2] = 3: " << localWorkSize[2] << endl;
     // This was crashing on an AMD Radeon.  But the Tesla V100 is high end.  So remove factor.
     //size_t optimal_z_dim=0.8*(oclHelper->getMaxWorkGroupSize()/(BLOCK_SIZE*BLOCK_SIZE));
     //localWorkSize[2]=std::min( optimal_z_dim ,  size_t(fieldDim.z));
